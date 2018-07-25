@@ -16,92 +16,125 @@ const styles = {
 class ListContacts extends React.Component {
 
   state = {
-    query:''
+    query: ''
   }
-  
+
   // utilizing propTypes for typechecking
-   static propTypes = {
-      contacts: PropTypes.array.isRequired,
-      onDeleteContact: PropTypes.func.isRequired
-   }
-   _updateQuery = (event) => {
-      //update query state & trim whitespaces
-      this.setState({query:event.target.value.trim()})
-   }
-   _clearQuery = () => {
-      this.setState({
-         query:''
-      })
+  static propTypes = {
+    contacts: PropTypes.array.isRequired,
+    onDeleteContact: PropTypes.func.isRequired
+  }
+  _updateQuery = (event) => {
+    //update query state & trim whitespaces
+    this.setState({ query: event.target.value.trim() })
+  }
+  _clearQuery = () => {
+    this.setState({
+      query: ''
+    })
+  }
+
+  render() {
+    const { contacts, onDeleteContact } = this.props;
+    const { query } = this.state;
+
+    let showingContacts
+    if (query) {
+      //ignore caps
+      const match = new RegExp(escapeRegExp(query), 'i');
+      showingContacts = contacts.filter((contact) => match.test(contact.firstName))
+    } else {
+      showingContacts = contacts
     }
 
-   render() {
-      const { contacts, onDeleteContact} = this.props;
-      const {query} = this.state;
+    // sort contacts by first name
+    showingContacts.sort(sortBy('firstName'))
 
-      let showingContacts
-      if (query){
-         //ignore caps
-         const match = new RegExp(escapeRegExp(query), 'i');
-         showingContacts = contacts.filter((contact) => match.test(contact.firstName))
-      } else{
-         showingContacts = contacts
-      }
+    return (
+      <div className='list-contacts'>
+        <div className='list-contacts-top'>
 
-      // sort contacts by first name
-      showingContacts.sort(sortBy('firstName'))
-      
-      return (
-         <div className= 'list-contacts'>
-            <div className= 'list-contacts-top'>
-
-               <input
-                  className='search-contacts'
-                  type = 'text'
-                  placeholder = 'Search by first name'
-                  value={query}
-                  onChange={(event) => this._updateQuery(event)}
-               />
-               <Link to="/create" className= 'add-contact' >Go to create Contacts</Link>
-            </div>
+          <input
+            className='search-contacts'
+            type='text'
+            placeholder='Search by first name'
+            value={query}
+            onChange={(event) => this._updateQuery(event)}
+          />
+          <Link to="/create" className='add-contact' >Go to create Contacts</Link>
+        </div>
 
 
 
-            {showingContacts.length !== contacts.length && (
-               <div className='showingContacts showing'>
-                  <span> Now showing {showingContacts.length} of {contacts.length} total </span>
-                  <Button color="primary" onClick={this._clearQuery}> Show all </Button>
-               </div>
-            )}
+        {showingContacts.length !== contacts.length && (
+          <div className='showingContacts showing'>
+            <span> Now showing {showingContacts.length} of {contacts.length} total </span>
+            <Button color="primary" onClick={this._clearQuery}> Show all </Button>
+          </div>
+        )}
 
-            <ol className = 'contact-list'>
-               {showingContacts.map( contact =>
-                  <li key={contact.id} className= 'contact-list-item'>
-                     <div className='contact-details'>
-                        <h3>{contact.firstName} {contact.lastName}</h3>
-                        <p>{contact.email}</p>
-                        <p>{contact.phone}</p>
-                        {contact.status === 'Active' ? (
-                          <p className="green">{contact.status}</p>
-                        ) :(
-                          <p className="red">{contact.status}</p>
-                        )
-                      }
-                     </div>
-                     
-                     <Link to={`/edit/${contact.id}`}>
-                       <Button className={this.props.classes.root} mini color="primary" variant="fab">
-                          <EditIcon/>
-                       </Button>
-                     </Link>
-                     <Button mini color="secondary" variant="fab" onClick={() => onDeleteContact(contact)}>
-                        <DeleteIcon/>
-                     </Button>
-                  </li>
-               )}
-            </ol>
-         </div>
-      )
-   }
+        <ol className='contact-list'>
+          {showingContacts.map((contact) => {
+
+
+            return (contact.status === 'Active' ? (
+              <li key={contact.id} className='contact-list-item-active'>
+                <div className='contact-details'>
+                  <h3>{contact.firstName} {contact.lastName}</h3>
+                  <p>{contact.email}</p>
+                  <p>{contact.phone}</p>
+
+                  <p className="green">{contact.status}</p>
+
+
+                </div>
+
+                <Link to={`/edit/${contact.id}`}>
+                  <Button className={this.props.classes.root} mini color="primary" variant="fab">
+                    <EditIcon />
+                  </Button>
+                </Link>
+                <Button mini color="secondary" variant="fab" onClick={() => onDeleteContact(contact)}>
+                  <DeleteIcon />
+                </Button>
+              </li>
+            ) : (
+
+                <li key={contact.id} className='contact-list-item-inactive'>
+                  <div className='contact-details'>
+                    <h3>{contact.firstName} {contact.lastName}</h3>
+                    <p>{contact.email}</p>
+                    <p>{contact.phone}</p>
+
+                    <p className="red">{contact.status}</p>
+
+                    }
+              </div>
+
+                  <Link to={`/edit/${contact.id}`}>
+                    <Button className={this.props.classes.root} mini color="primary" variant="fab">
+                      <EditIcon />
+                    </Button>
+                  </Link>
+                  <Button mini color="secondary" variant="fab" onClick={() => onDeleteContact(contact)}>
+                    <DeleteIcon />
+                  </Button>
+                </li>
+
+              )
+
+
+
+
+
+            )
+
+          }
+          )}
+        </ol>
+      </div>
+    )
+  }
 }
 
 

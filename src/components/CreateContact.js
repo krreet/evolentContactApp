@@ -12,9 +12,9 @@ class CreateContact extends Component {
    _handleSubmit = (e) => {
       e.preventDefault()
       const values = serializeForm(e.target, { hash: true})
-      values.firstName = values.firstName.charAt(0).toUpperCase()
-      values.lastName = values.lastName.charAt(0).toUpperCase()
-      values.id = Math.random().toString(36).substr(2,10)
+      values.firstName = values.firstName;
+      values.lastName = values.lastName;
+      values.id = Math.random().toString(36).substr(2,10);
       if ( this.props.onCreateContact){
       this.setState({finalInput:values}, ()=>{
         
