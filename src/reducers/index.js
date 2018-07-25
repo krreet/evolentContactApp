@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {ADD_CONTACT, DELETE_CONTACT, EDIT_CONTACT} from '../actions'
+import {ADD_CONTACT, DELETE_CONTACT, EDIT_CONTACT , EDIT_STATUS} from '../actions'
 
 const initialState = {
   all_contacts: [
@@ -46,6 +46,26 @@ function contacts(state=initialState, action){
               phone: action.contact.phone,
               status: action.contact.status
             }
+          }
+          return contact
+        })
+      }
+      case EDIT_STATUS:
+      return {
+        ...state,
+        all_contacts: state.all_contacts.map(contact=>{
+          if(contact.id===action.contact.id){
+            if(contact.status == 'Inactive'){
+            return {
+              ...contact,
+              status: 'Active'
+            }
+          }else{
+            return {
+              ...contact,
+              status: 'Inactive'
+            }
+          }
           }
           return contact
         })

@@ -7,11 +7,12 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
 
 const styles = {
   root: {
     marginRight: 10,
-  },
+  }
 };
 class ListContacts extends React.Component {
 
@@ -33,7 +34,10 @@ class ListContacts extends React.Component {
       query: ''
     })
   }
+  handleChange = (event, checked) => {
+    console.log(checked);
 
+  };
   render() {
     const { contacts, onDeleteContact } = this.props;
     const { query } = this.state;
@@ -49,6 +53,8 @@ class ListContacts extends React.Component {
 
     // sort contacts by first name
     showingContacts.sort(sortBy('firstName'))
+
+ 
 
     return (
       <div className='list-contacts'>
@@ -88,15 +94,26 @@ class ListContacts extends React.Component {
 
 
                 </div>
-
+                <div>
+                <Switch checked={contact.status === 'Active'} onChange={this.handleChange} aria-label="EnableSwitch" 
+          
+                />
+                
+                </div>
                 <Link to={`/edit/${contact.id}`}>
-                  <Button className={this.props.classes.root} mini color="primary" variant="fab">
-                    <EditIcon />
+                  <Button className={this.props.classes.root} mini color="primary" variant="contained">
+                  Edit
+                    <EditIcon/>
                   </Button>
                 </Link>
-                <Button mini color="secondary" variant="fab" onClick={() => onDeleteContact(contact)}>
-                  <DeleteIcon />
+             <div>
+                <Button className={this.props.classes.root} mini color="secondary" variant="contained" onClick={() => onDeleteContact(contact)}>
+                Delete
+                  <DeleteIcon/>
                 </Button>
+                </div>
+
+                 
               </li>
             ) : (
 
@@ -108,17 +125,26 @@ class ListContacts extends React.Component {
 
                     <p className="red">{contact.status}</p>
 
-                    }
+                  
               </div>
-
-                  <Link to={`/edit/${contact.id}`}>
-                    <Button className={this.props.classes.root} mini color="primary" variant="fab">
-                      <EditIcon />
-                    </Button>
-                  </Link>
-                  <Button mini color="secondary" variant="fab" onClick={() => onDeleteContact(contact)}>
-                    <DeleteIcon />
+              <div>
+                <Switch checked={contact.status === 'Active'} onChange={this.handleChange} aria-label="EnableSwitch" 
+          
+                />
+                
+                </div>
+                <Link to={`/edit/${contact.id}`}>
+                  <Button className={this.props.classes.root} mini color="primary" variant="contained">
+                  Edit
+                    <EditIcon/>
                   </Button>
+                </Link>
+             <div>
+                <Button className={this.props.classes.root} mini color="secondary" variant="contained" onClick={() => onDeleteContact(contact)}>
+                Delete
+                  <DeleteIcon/>
+                </Button>
+                </div>
                 </li>
 
               )
