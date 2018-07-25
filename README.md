@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-To see a demo of the app, please click here --> [Website](https://evolent-contacts.herokuapp.com/)
+To see a demo of the app, please click here --> [Website](https://evolenthealth.herokuapp.com/)
 
 ## Folder Structure
 ```bash
