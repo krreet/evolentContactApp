@@ -33,6 +33,13 @@ To see a demo of the app, please click here --> [Website](https://evolenthealth.
 
 To run the app, **follow these steps**:
 
+## Quickstart
+
+```sh
+  npm install
+  npm start
+```
+
 * `npm install`
 * `npm start` is the JavaScript entry point.
 
@@ -41,6 +48,17 @@ This app is a React-Redux application that utilizes the React-Redux package. Alt
 A single actions file (`index.js`) contains several actions to add/create/delete contacts while a single reducer file (`index.js`) listens for any actions and updates the store accordingly. The reducer file also initializes the store with a contact.
 
 The root file (`App.js`) leverages React-Redux's connect method to access the store and passes down state (all contacts) and action creators (such as add and delete) to child components.
+
+
+#### components
+This folder contains all the common components which are used throughout the project.
+
+#### index.js
+Index.js simply does client side rendering using the data provided 
+
+#### modules
+Modules are the way of organising different domain-specific modules in the project
+
 
 **Routes**:
 * `/`: list all contacts
