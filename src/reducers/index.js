@@ -19,6 +19,14 @@ const initialState = {
       phone : "8522112523",
       status : "Inactive"
     },
+     {
+      id : "5643rgehfbvg",
+      firstName : "Apoorva",
+      lastName : "Singh",
+      email : "ApoorvaSingh@yahoo.com",
+      phone : "8522112523",
+      status : "Active"
+    }
   ]
 }
 
